@@ -1,0 +1,6 @@
+{
+  "d_token": "DISCORD_APP_TOKEN_HERE",
+  "adminID": "DISCORD_USER_ID_OF_SERVER_ADMIN",
+  "prefix": "!",
+  "passes": 1
+}

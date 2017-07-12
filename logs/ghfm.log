@@ -1,0 +1,226 @@
+Connected to GH.FM
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'wBqM2ytqHY4',
+  title: 'late for meeting',
+  requester: 'jambonvert' }
+undefined
+Connected to GH.FM
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'iRZ2Sh5-XuM',
+  title: 'going to the store',
+  requester: 'jambonvert' }
+Connected to GH.FM
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'iRZ2Sh5-XuM',
+  title: 'going to the store',
+  requester: 'jambonvert' }
+undefined
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'P8AKP4Tw9sE',
+  title: 'The Little Ships - Jean Jacques Perrey',
+  requester: 'jambonvert' }
+undefined
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'xm41dHucxmM',
+  title: 'human music',
+  requester: 'jambonvert' }
+undefined
+{ '88301149672718336': { playing: true, songs: [] } }
+undefined
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'dXTGN_St-ho',
+  title: 'Jean-Jacques Perrey "E.V.A."',
+  requester: 'TM' }
+undefined
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: '9dmX2uhQrZs',
+  title: 'Lonnie Liston Smith & The Cosmic Echoes - Expansions (Cosmic Funk - 1974)',
+  requester: 'TM' }
+{ url: 'Kw6hML2Xxxc',
+  title: 'Kenmochi Hidefumi - "Stoner Sunshine"',
+  requester: 'TM' }
+{ url: 'wVDJdC9h-oM',
+  title: 'Ino Hidefumi - Green Power',
+  requester: 'TM' }
+{ url: '_Q7IJOYxAMo',
+  title: 'Nightmares on Wax - Les Nuits',
+  requester: 'TM' }
+{ url: 'X1JtoOMkrw4', title: 'Fat Jon - i dee', requester: 'TM' }
+{ url: 'W__CU4xtVN4',
+  title: 'DELA - PRAISE & PRAISE',
+  requester: 'TM' }
+{ url: 'jsWkPsVpe0Y',
+  title: 'Morcheeba - Big calm',
+  requester: 'TM' }
+{ url: 'mmYiz0ZPXcM',
+  title: 'Kirk - Uptown Style (Lord Finesse\'s Laidback Bounce Extended Mix) (1994) [HQ]',
+  requester: 'TM' }
+{ url: 'CPuTB38qLCg',
+  title: 'Lord Finesse - Soul Plan (Instrumental)',
+  requester: 'TM' }
+undefined
+Connected to GH.FM
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: '-i_Ja2sVw1g',
+  title: 'Bobbi Humphrey - Harlem river drive',
+  requester: 'TM' }
+Connected to GH.FM
+Connected to GH.FM
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: '-i_Ja2sVw1g',
+  title: 'Bobbi Humphrey - Harlem river drive',
+  requester: 'jambonvert' }
+Message {
+  channel: 
+   TextChannel {
+     type: 'text',
+     id: '334754885641961472',
+     name: 'ghfm',
+     position: 8,
+     permissionOverwrites: 
+      Collection {
+        '88301149672718336' => [Object],
+        '140883775885279233' => [Object],
+        '334783157964374016' => [Object],
+        _array: null,
+        _keyArray: null },
+     topic: '┏(-_-)┓┏(-_-)┛┗(-_- )┓┗(-_-)┛┏(-_-)┛ ┏(-_-)┓┏(-_-)┛┗(-_- )┓┗(-_-)┛┏(-_-)┛┏(-_-)┓┏(-_-)┛┗(-_- )┓┗(-_-)┛┏(-_-)┛ ┏(-_-)┓┏(-_-)┛┗(-_- )┓┗(-_-)┛┏(-_-)┛┏(-_-)┓┏(-_-)┛┗(-_- )┓┗(-_-)┛┏(-_-)┛ ┏(-_-)┓┏(-_-)┛┗(-_- )┓┗(-_-)┛┏(-_-)┛',
+     lastMessageID: '334810725207900171',
+     guild: 
+      Guild {
+        members: [Object],
+        channels: [Object],
+        roles: [Object],
+        presences: [Object],
+        available: true,
+        id: '88301149672718336',
+        name: 'The Curing Chamber',
+        icon: '1475eb2331fc2fca6f18e8ead508523c',
+        splash: null,
+        region: 'us-west',
+        memberCount: 32,
+        large: undefined,
+        features: [],
+        applicationID: null,
+        emojis: [Object],
+        afkTimeout: 1800,
+        afkChannelID: '113087279408377856',
+        embedEnabled: undefined,
+        verificationLevel: 2,
+        joinedTimestamp: 1499888986457,
+        ownerID: '88301001169207296',
+        _rawVoiceStates: [Object] },
+     messages: 
+      Collection {
+        '334810616978079744' => [Object],
+        '334810622992842763' => [Object],
+        '334810625903689748' => [Object],
+        '334810626650144769' => [Object],
+        '334810675803324417' => [Object],
+        '334810716638937088' => [Object],
+        '334810725207900171' => [Object],
+        _array: null,
+        _keyArray: null },
+     _typing: 
+      Map {
+        '91701242341896192' => [Object],
+        '88301001169207296' => [Object] } },
+  id: '334810725207900171',
+  type: 'DEFAULT',
+  content: '!current',
+  author: 
+   User {
+     id: '88301001169207296',
+     username: 'jambonvert',
+     discriminator: '8610',
+     avatar: '2ffbba7158f96ecee6c4936895be6fd2',
+     bot: false,
+     lastMessageID: '334810725207900171' },
+  member: 
+   GuildMember {
+     guild: 
+      Guild {
+        members: [Object],
+        channels: [Object],
+        roles: [Object],
+        presences: [Object],
+        available: true,
+        id: '88301149672718336',
+        name: 'The Curing Chamber',
+        icon: '1475eb2331fc2fca6f18e8ead508523c',
+        splash: null,
+        region: 'us-west',
+        memberCount: 32,
+        large: undefined,
+        features: [],
+        applicationID: null,
+        emojis: [Object],
+        afkTimeout: 1800,
+        afkChannelID: '113087279408377856',
+        embedEnabled: undefined,
+        verificationLevel: 2,
+        joinedTimestamp: 1499888986457,
+        ownerID: '88301001169207296',
+        _rawVoiceStates: [Object] },
+     user: 
+      User {
+        id: '88301001169207296',
+        username: 'jambonvert',
+        discriminator: '8610',
+        avatar: '2ffbba7158f96ecee6c4936895be6fd2',
+        bot: false,
+        lastMessageID: '334810725207900171' },
+     _roles: [ '140883775885279233', '308260488565751808' ],
+     serverDeaf: false,
+     serverMute: false,
+     selfMute: true,
+     selfDeaf: false,
+     voiceSessionID: '39f7c3fbc0c4eb512b9a93616bc11363',
+     voiceChannelID: '334727319891607553',
+     speaking: false,
+     nickname: null,
+     joinedTimestamp: 1441123034640,
+     lastMessageID: '334810725207900171' },
+  pinned: false,
+  tts: false,
+  nonce: '334810718845009920',
+  system: false,
+  embeds: [],
+  attachments: Collection { _array: null, _keyArray: null },
+  createdTimestamp: 1499895497372,
+  editedTimestamp: null,
+  mentions: 
+   { users: Collection { _array: null, _keyArray: null },
+     roles: Collection { _array: null, _keyArray: null },
+     channels: Collection { _array: null, _keyArray: null },
+     everyone: false },
+  _edits: [],
+  reactions: Collection { _array: null, _keyArray: null },
+  webhookID: null }
+Connected to GH.FM
+Connected to GH.FM
+Connected to GH.FM
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'bioYs6oAD8g',
+  title: 'Dub FX 18/04/2009 \'Made\'',
+  requester: 'jambonvert' }
+{ url: 'WIE--qDiBLk',
+  title: 'The Upsetters - Blackboard Jungle Dub - Blackboard Jungle Dub ( Ver. 1 )',
+  requester: 'TM' }
+{ url: 'xm41dHucxmM',
+  title: 'human music',
+  requester: 'jambonvert' }
+undefined
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'UiInBOVHpO8',
+  title: 'Dub FX 10/10/2008 \'Love Someone\'',
+  requester: 'timmon' }
+undefined
+{ '88301149672718336': { playing: true, songs: [ [Object] ] } }
+{ url: 'UiInBOVHpO8',
+  title: 'Dub FX 10/10/2008 \'Love Someone\'',
+  requester: 'jambonvert' }
+{ url: '_c1NJQ0UP_Q',
+  title: 'hi, i\'m steve',
+  requester: 'Screevo' }
+undefined
