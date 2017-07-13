@@ -1,6 +1,8 @@
 {
   "d_token": "DISCORD_APP_TOKEN_HERE",
   "adminID": "DISCORD_USER_ID_OF_SERVER_ADMIN",
+  "voiceChannelName": "NAME_OF_VOICE_CHANNEL_TO_AUTOJOIN",
+  "textChannelName": "NAME_OF_TEXT_CHANNEL_FOR_COMMANDS"
   "prefix": "!",
   "passes": 1
 }
