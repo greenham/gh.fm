@@ -2,7 +2,8 @@ const { Client } = require('discord.js');
 const yt = require('ytdl-core');
 const tokens = require('./tokens.json');
 const client = new Client();
-const fallbackStreams = ["TDvV0J8JtPA", "MWZiKbWcVVQ", "g557asb1mRk", "7y7CLWArdFY"];
+const fallbackStreams = ["MWZiKbWcVVQ", "7y7CLWArdFY", "hX3j0sQ7ot8", "eT8FxWFvUXY"];
+let playSettings = {volume: 0.5, passes: tokens.passes};
 
 let queue = {};
 
@@ -30,6 +31,7 @@ const commands = {
 			if (song === undefined) {
 				return msg.channel.send(`Queue is empty, add more songs with ${tokens.prefix}add (playing from livestreams until then)`).then(() => {
 					// no songs in the queue right now, pick randomly from some known livestreams
+					// @todo pick a new one when adding fails (move this into its own function)
 				  let livestream = fallbackStreams[Math.floor(Math.random()*fallbackStreams.length)];
 					msg.content = `!add ${livestream}`;
 					commands.add(msg).then(() => {
@@ -40,10 +42,10 @@ const commands = {
 				});
 			}
 			msg.channel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
-			dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), { passes : tokens.passes });
+			dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), playSettings);
 			let collector = msg.channel.createCollector(m => m);
 			collector.on('message', m => {
-				//console.log(m);
+				// @todo allow users with the DJ role to use these commands too
 				if (m.content.startsWith(tokens.prefix + 'pause')) {
 					if (m.author.username == song.requester || m.author.id == tokens.adminID) {
 						msg.channel.send('paused').then(() => {dispatcher.pause();});
@@ -106,16 +108,28 @@ const commands = {
 				msg.channel.send(`You must add a YouTube video url, or id after ${tokens.prefix}add`).then(() => reject(Error('No URL included')));
 			}
 			// @todo support playlist addition
+			// @todo support start time parameter (seek)
 			yt.getInfo(url, (err, info) => {
-				if (err) {
+				if (err || !info) {
 					msg.channel.send('Invalid YouTube Link: ' + err).then(() => reject(err));
 				}
-				if (!queue.hasOwnProperty(msg.guild.id)) queue[msg.guild.id] = {}, queue[msg.guild.id].playing = false, queue[msg.guild.id].songs = [], queue[msg.guild.id].livestreamMode = false;
+
+				// set up the queue if it isn't yet
+				if (!queue.hasOwnProperty(msg.guild.id)) {
+					queue[msg.guild.id] = {},
+					queue[msg.guild.id].playing = false,
+					queue[msg.guild.id].songs = [],
+					queue[msg.guild.id].livestreamMode = false;
+				}
+
+				// add the new song to the queue
 				queue[msg.guild.id].songs.push({url: url, title: info.title, requester: msg.author.username, videoUrl: info.video_url});
 				msg.channel.send(`added **${info.title}** to the queue`);
+
 				if (queue[msg.guild.id].livestreamMode === true) {
 					msg.channel.send('currently in livestream mode -- use !skip to go to next song in queue');
 				}
+
 				resolve(info);
 			});
 		});
@@ -134,10 +148,17 @@ const commands = {
 		}
 	},
 	'queue': (msg) => {
-		if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add or just use ${tokens.prefix}play to queue up a random livestream.`);
+		if (queue[msg.guild.id] === undefined) {
+			return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add or just use ${tokens.prefix}play to queue up a random livestream.`);
+		}
+
 		let tosend = [];
 		queue[msg.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} - Requested by: ${song.requester}`);});
 		msg.channel.send(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
+
+		if (queue[msg.guild.id].livestreamMode === true) {
+			msg.channel.send('currently in livestream mode -- use !skip to go to next song in queue');
+		}
 	},
 	'help': (msg) => {
 		let tosend = ['```xl', tokens.prefix + 'add : "Add a valid youtube link to the queue"', tokens.prefix + 'queue : "Shows the current queue, up to 15 songs shown."', tokens.prefix + 'play : "Play the music queue if already joined to a voice channel"', '', 'the following commands only function while the play command is running:'.toUpperCase(), tokens.prefix + 'pause : "pauses the music"',	tokens.prefix + 'resume : "resumes the music"', tokens.prefix + 'skip : "skips the playing song"', tokens.prefix + 'time : "Shows the playtime of the song."', '```'];
