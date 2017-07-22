@@ -1,8 +1,12 @@
+/**
+ * GH.FM
+ * A discord bot that takes/plays song requests through youtube.
+ */
 const { Client } = require('discord.js');
 const yt = require('ytdl-core');
 const tokens = require('./tokens.json');
 const client = new Client();
-const fallbackStreams = ["MWZiKbWcVVQ", "7y7CLWArdFY", "hX3j0sQ7ot8", "eT8FxWFvUXY"];
+const fallbackStreams = ["7y7CLWArdFY", "hX3j0sQ7ot8", "eT8FxWFvUXY", "2L9vFNMvIBE", "-34cPr5GxdQ"];
 let playSettings = {volume: 0.5, passes: tokens.passes};
 
 let queue = {};
