@@ -83,7 +83,7 @@ const commands = {
 					msg.channel.send(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
 				} else if (m.content.startsWith(tokens.prefix + 'current')) {
 					// @todo send DM to author of message instead of the channel
-					msg.channel.send(`Current song playing on ${tokens.voiceChannelName}: ${song.videoUrl}`);
+					msg.reply(`Current song playing on ${tokens.voiceChannelName}: ${song.videoUrl}`);
 				}
 			});
 			dispatcher.on('end', () => {
