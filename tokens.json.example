@@ -3,6 +3,7 @@
   "adminID": "DISCORD_USER_ID_OF_SERVER_ADMIN",
   "voiceChannelName": "NAME_OF_VOICE_CHANNEL_TO_AUTOJOIN",
   "textChannelName": "NAME_OF_TEXT_CHANNEL_FOR_COMMANDS"
+  "djRoleName": "NAME_OF_ROLE_ALLOWED_TO_MANAGE_ACTIVE_SONGS"
   "prefix": "!",
   "passes": 1
 }

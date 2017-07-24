@@ -49,27 +49,27 @@ const commands = {
 			dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), playSettings);
 			let collector = msg.channel.createCollector(m => m);
 			collector.on('message', m => {
-				// @todo allow users with the DJ role to use these commands too
+				let userIsDJ = (m.author.id == tokens.adminID) || (m.member.roles.find('name', tokens.djRoleName));
 				if (m.content.startsWith(tokens.prefix + 'pause')) {
-					if (m.author.username == song.requester || m.author.id == tokens.adminID) {
+					if (m.author.username == song.requester || userIsDJ) {
 						msg.channel.send('paused').then(() => {dispatcher.pause();});
 					} else {
-						msg.channel.send('only the requester or an admin can do that');
+						msg.channel.send('only the requester or a DJ can do that');
 					}
 				} else if (m.content.startsWith(tokens.prefix + 'resume')){
-					if (m.author.username == song.requester || m.author.id == tokens.adminID) {
+					if (m.author.username == song.requester || userIsDJ) {
 						msg.channel.send('resumed').then(() => {dispatcher.resume();});
 					} else {
-						msg.channel.send('only the requester or an admin can do that');
+						msg.channel.send('only the requester or a DJ can do that');
 					}
 				} else if (m.content.startsWith(tokens.prefix + 'skip')){
-					if (m.author.username == song.requester || m.author.id == tokens.adminID || queue[m.guild.id].livestreamMode === true) {
+					if (m.author.username == song.requester || userIsDJ || queue[m.guild.id].livestreamMode === true) {
 						msg.channel.send('skipped').then(() => {
 							queue[m.guild.id].livestreamMode = false;
 							dispatcher.end();
 						});
 					} else {
-						msg.channel.send('only the requester or an admin can do that');
+						msg.channel.send('only the requester or a DJ can do that right now');
 					}
 				} else if (m.content.startsWith('volume+') && m.author.id == tokens.adminID){
 					if (Math.round(dispatcher.volume*50) >= 100) return msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
