@@ -114,7 +114,7 @@ const commands = {
 			// @todo support playlist addition
 			// @todo support start time parameter (seek)
 			yt.getInfo(url, (err, info) => {
-				if (err || !info) {
+				if (err || !info || typeof info === 'undefined') {
 					msg.channel.send('Invalid YouTube Link: ' + err).then(() => reject(err));
 				}
 
@@ -127,6 +127,7 @@ const commands = {
 				}
 
 				// add the new song to the queue
+				info.title = info.title || 'Untitled';
 				queue[msg.guild.id].songs.push({url: url, title: info.title, requester: msg.author.username, videoUrl: info.video_url});
 				msg.channel.send(`added **${info.title}** to the queue`);
 
