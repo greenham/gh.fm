@@ -6,7 +6,7 @@ const { Client } = require('discord.js');
 const yt = require('ytdl-core');
 const tokens = require('./tokens.json');
 const client = new Client();
-const fallbackStreams = ["7y7CLWArdFY", "hX3j0sQ7ot8", "eT8FxWFvUXY", "2L9vFNMvIBE", "-34cPr5GxdQ"];
+const fallbackStreams = ["ezvTXN6vXRM", "2L9vFNMvIBE", "3KR2S3juSqU", "iUm_9ozEVlk"];
 let playSettings = {volume: 0.5, passes: tokens.passes};
 
 let queue = {};
