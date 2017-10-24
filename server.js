@@ -4,9 +4,10 @@
  */
 const { Client } = require('discord.js');
 const yt = require('ytdl-core');
+const { ytGetInfo } = require('ytdl-getinfo');
 const tokens = require('./tokens.json');
 const client = new Client();
-const fallbackStreams = ["7y7CLWArdFY", "hX3j0sQ7ot8", "eT8FxWFvUXY", "2L9vFNMvIBE", "-34cPr5GxdQ"];
+const fallbackStreams = ["ql4S8z1jW8I", "hX3j0sQ7ot8", "j3sPW0uIgs8", "pTGk9ld_j1E"];
 let playSettings = {volume: 0.5, passes: tokens.passes};
 
 let queue = {};
@@ -113,11 +114,7 @@ const commands = {
 			}
 			// @todo support playlist addition
 			// @todo support start time parameter (seek)
-			yt.getInfo(url, (err, info) => {
-				if (err || !info) {
-					msg.channel.send('Invalid YouTube Link: ' + err).then(() => reject(err));
-				}
-
+			ytGetInfo(url).then(info => {
 				// set up the queue if it isn't yet
 				if (!queue.hasOwnProperty(msg.guild.id)) {
 					queue[msg.guild.id] = {},
@@ -126,16 +123,31 @@ const commands = {
 					queue[msg.guild.id].livestreamMode = false;
 				}
 
-				// add the new song to the queue
-				queue[msg.guild.id].songs.push({url: url, title: info.title, requester: msg.author.username, videoUrl: info.video_url});
-				msg.channel.send(`added **${info.title}** to the queue`);
+				// determine if this is a single video or a playlist
+				if (info.partial) {
+					console.log('detected playlist');
+					info.on('video', v => {
+						console.log(v.title);
+					}).on('done', () => {
+						console.log(`Playlist contains ${info.items.length} items.`)
+					});
+				} else {
+					let video = info.items[0];
+					console.log(video);
 
-				if (queue[msg.guild.id].livestreamMode === true) {
-					msg.channel.send('currently in livestream mode -- use !skip to go to next song in queue');
+					// add the new song to the queue
+					queue[msg.guild.id].songs.push({url: url, title: video.title, requester: msg.author.username, videoUrl: video.url});
+					msg.channel.send(`added **${info.title}** to the queue`);
+
+					if (queue[msg.guild.id].livestreamMode === true) {
+						msg.channel.send('currently in livestream mode -- use !skip to go to next song in queue');
+					}
 				}
 
 				resolve(info);
-			});
+			}).catch(e => {
+				msg.channel.send('Invalid YouTube Link!').then(() => reject(e));
+			};
 		});
 	},
 	'remove': (msg) => {
