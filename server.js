@@ -25,7 +25,9 @@ const commands = {
 				}).catch(console.error);
 			});
 		}
+		// connect to the voice channl if not already connected
 		if (!msg.guild.voiceConnection) return commands.join(tokens.voiceChannelName).then(() => commands.play(msg));
+		// make sure it's not already playing
 		if (queue[msg.guild.id].playing) return msg.channel.send('Already Playing');
 		let dispatcher;
 		queue[msg.guild.id].playing = true;
@@ -33,17 +35,17 @@ const commands = {
 		(function play(song) {
 			console.log(song);
 			if (song === undefined) {
-				return msg.channel.send(`Queue is empty, add more songs with ${tokens.prefix}add (playing from livestreams until then)`).then(() => {
+				return msg.channel.send(`Queue is empty, add more songs with ${tokens.prefix}add`);//.then(() => {
 					// no songs in the queue right now, pick randomly from some known livestreams
 					// @todo pick a new one when adding fails (move this into its own function)
-				  let livestream = fallbackStreams[Math.floor(Math.random()*fallbackStreams.length)];
+				  /*let livestream = fallbackStreams[Math.floor(Math.random()*fallbackStreams.length)];
 					msg.content = `!add ${livestream}`;
 					commands.add(msg).then(() => {
 						queue[msg.guild.id].playing = false;
 						queue[msg.guild.id].livestreamMode = true;
 						commands.play(msg);
-					}).catch(console.error);
-				});
+					}).catch(console.error);*/
+				//});
 			}
 			msg.channel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
 			dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), playSettings);
@@ -201,3 +203,6 @@ function dmUser(originalMessage, newMessage)
   	console.error('no member found for DM');
   }
 }
+
+// catch Promise errors
+process.on('unhandledRejection', console.error);
