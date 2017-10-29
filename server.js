@@ -41,6 +41,7 @@ const commands = {
 			console.log(song);
 			if (song === undefined) {
 				queue[msg.guild.id].playing = false;
+				queue[m.guild.id].livestreamMode = false;
 				return msg.channel.send(`Queue is empty, add more songs with ${tokens.prefix}add, or play a random livestream with ${tokens.prefix}play`);
 			}
 			msg.channel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
