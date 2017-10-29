@@ -169,13 +169,21 @@ const commands = {
 		msg.channel.send(tosend.join('\n'));
 	},
 	'reboot': (msg) => {
-		if (msg.author.id == tokens.adminID) process.exit(); //Requires a node module like Forever to work.
+		if (msg.author.id == tokens.adminID) {
+			msg.channel.send('Restarting...');
+			process.exit(); //Requires a node module like Forever to work.
+		} else {
+			msg.channel.send('Only the admin is allowed to do that.');
+		}
 	}
 };
 
 client.on('ready', () => {
 	// join the designated voice channel
-	commands.join(tokens.voiceChannelName).then(connection => console.log('Connected to ' + tokens.voiceChannelName)).catch(console.error);
+	commands.join(tokens.voiceChannelName).then(connection => {
+		console.log('Connected to ' + tokens.voiceChannelName);
+		msg.channel.send('Connected to ' + tokens.voiceChannelName);
+	}).catch(console.error);
 });
 
 client.on('message', msg => {
