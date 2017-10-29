@@ -181,8 +181,9 @@ const commands = {
 client.on('ready', () => {
 	// join the designated voice channel
 	commands.join(tokens.voiceChannelName).then(connection => {
+		let textChannel = client.channels.find('name', tokens.textChannelName);
 		console.log('Connected to ' + tokens.voiceChannelName);
-		msg.channel.send('Connected to ' + tokens.voiceChannelName);
+		textChannel.send('Connected to ' + tokens.voiceChannelName);
 	}).catch(console.error);
 });
 
