@@ -6,6 +6,7 @@ const { Client } = require('discord.js');
 const yt = require('ytdl-core');
 const tokens = require('./tokens.json');
 const client = new Client();
+// @todo use channels instead of specific streams and search/find streams on-the-fly
 const fallbackStreams = ["ezvTXN6vXRM", "2L9vFNMvIBE", "3KR2S3juSqU", "iUm_9ozEVlk"];
 let playSettings = {volume: 0.5, passes: tokens.passes};
 
@@ -25,27 +26,22 @@ const commands = {
 				}).catch(console.error);
 			});
 		}
-		// connect to the voice channl if not already connected
+
+		// connect to the default voice channel if not already connected
+		// @todo try connecting to the user's voice channel first
 		if (!msg.guild.voiceConnection) return commands.join(tokens.voiceChannelName).then(() => commands.play(msg));
+
 		// make sure it's not already playing
 		if (queue[msg.guild.id].playing) return msg.channel.send('Already Playing');
-		let dispatcher;
 		queue[msg.guild.id].playing = true;
+
+		let dispatcher;
 
 		(function play(song) {
 			console.log(song);
 			if (song === undefined) {
-				return msg.channel.send(`Queue is empty, add more songs with ${tokens.prefix}add`);//.then(() => {
-					// no songs in the queue right now, pick randomly from some known livestreams
-					// @todo pick a new one when adding fails (move this into its own function)
-				  /*let livestream = fallbackStreams[Math.floor(Math.random()*fallbackStreams.length)];
-					msg.content = `!add ${livestream}`;
-					commands.add(msg).then(() => {
-						queue[msg.guild.id].playing = false;
-						queue[msg.guild.id].livestreamMode = true;
-						commands.play(msg);
-					}).catch(console.error);*/
-				//});
+				queue[msg.guild.id].playing = false;
+				return msg.channel.send(`Queue is empty, add more songs with ${tokens.prefix}add, or play a random livestream with ${tokens.prefix}play`);
 			}
 			msg.channel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
 			dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), playSettings);
@@ -54,24 +50,24 @@ const commands = {
 				let userIsDJ = (m.author.id == tokens.adminID) || (m.member.roles.find('name', tokens.djRoleName));
 				if (m.content.startsWith(tokens.prefix + 'pause')) {
 					if (m.author.username == song.requester || userIsDJ) {
-						msg.channel.send('paused').then(() => {dispatcher.pause();});
+						msg.channel.send(`Paused current song, use ${tokens.prefix}resume to unpause.`).then(() => {dispatcher.pause();});
 					} else {
-						msg.channel.send('only the requester or a DJ can do that');
+						msg.channel.send('Only the requester or a DJ can do that.');
 					}
 				} else if (m.content.startsWith(tokens.prefix + 'resume')){
 					if (m.author.username == song.requester || userIsDJ) {
-						msg.channel.send('resumed').then(() => {dispatcher.resume();});
+						msg.channel.send('Resumed').then(() => {dispatcher.resume();});
 					} else {
-						msg.channel.send('only the requester or a DJ can do that');
+						msg.channel.send('Only the requester or a DJ can do that.');
 					}
 				} else if (m.content.startsWith(tokens.prefix + 'skip')){
 					if (m.author.username == song.requester || userIsDJ || queue[m.guild.id].livestreamMode === true) {
-						msg.channel.send('skipped').then(() => {
+						msg.channel.send('Skipped current song.').then(() => {
 							queue[m.guild.id].livestreamMode = false;
 							dispatcher.end();
 						});
 					} else {
-						msg.channel.send('only the requester or a DJ can do that right now');
+						msg.channel.send('Only the requester or a DJ can do that right now.');
 					}
 				} else if (m.content.startsWith('volume+') && m.author.id == tokens.adminID){
 					if (Math.round(dispatcher.volume*50) >= 100) return msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
@@ -82,7 +78,7 @@ const commands = {
 					dispatcher.setVolume(Math.max((dispatcher.volume*50 - (2*(m.content.split('-').length-1)))/50,0));
 					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 				} else if (m.content.startsWith(tokens.prefix + 'time')){
-					msg.channel.send(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
+					msg.channel.send(`Current song time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
 				} else if (m.content.startsWith(tokens.prefix + 'current')) {
 					// @todo send DM to author of message instead of the channel
 					msg.channel.send(`Current song playing on ${tokens.voiceChannelName}: ${song.videoUrl}`);
@@ -100,10 +96,10 @@ const commands = {
 			});
 		})(queue[msg.guild.id].songs.shift());
 	},
-	'join': () => {
+	'join': (voiceChannelName) => {
 		return new Promise((resolve, reject) => {
-			const voiceChannel = client.channels.find('name', tokens.voiceChannelName);
-			if (!voiceChannel || voiceChannel.type !== 'voice') return msg.reply('I couldn\'t connect to your voice channel...');
+			const voiceChannel = client.channels.find('name', voiceChannelName);
+			if (!voiceChannel || voiceChannel.type !== 'voice') return msg.reply(`I couldn't connect to the '${voiceChannelName}' voice channel, please check permissions.`);
 			voiceChannel.join().then(connection => resolve(connection)).catch(err => reject(err));
 		});
 	},
@@ -111,7 +107,7 @@ const commands = {
 		return new Promise((resolve, reject) => {
 			let url = msg.content.split(' ')[1];
 			if (url == '' || url === undefined) {
-				msg.channel.send(`You must add a YouTube video url, or id after ${tokens.prefix}add`).then(() => reject(Error('No URL included')));
+				msg.channel.send(`You must add a YouTube video url or id after ${tokens.prefix}add`).then(() => reject(Error('No URL included')));
 			}
 			// @todo support playlist addition
 			// @todo support start time parameter (seek)
@@ -131,10 +127,10 @@ const commands = {
 				// add the new song to the queue
 				info.title = info.title || 'Untitled';
 				queue[msg.guild.id].songs.push({url: url, title: info.title, requester: msg.author.username, videoUrl: info.video_url});
-				msg.channel.send(`added **${info.title}** to the queue`);
+				msg.channel.send(`Added **${info.title}** to the queue`);
 
 				if (queue[msg.guild.id].livestreamMode === true) {
-					msg.channel.send('currently in livestream mode -- use !skip to go to next song in queue');
+					msg.channel.send('Currently in livestream mode -- use !skip to go to next song in queue');
 				}
 
 				resolve(info);
@@ -148,7 +144,7 @@ const commands = {
 			let index = (queueId == '' || queueId === undefined) ? (songs.length - 1) : (queueId - 1);
 			let removeSong = queue[msg.guild.id].songs.splice(index, 1);
 			if (removeSong !== undefined) {
-				msg.channel.send(`removed **${removeSong.title} from the queue`);
+				msg.channel.send(`Removed **${removeSong.title} from the queue`);
 			}
 		} else {
 			msg.reply('Only an admin can do that.');
@@ -164,11 +160,11 @@ const commands = {
 		msg.channel.send(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
 
 		if (queue[msg.guild.id].livestreamMode === true) {
-			msg.channel.send('currently in livestream mode -- use !skip to go to next song in queue');
+			msg.channel.send('Currently in livestream mode -- use !skip to go to next song in queue');
 		}
 	},
 	'help': (msg) => {
-		let tosend = ['```xl', tokens.prefix + 'add : "Add a valid youtube link to the queue"', tokens.prefix + 'queue : "Shows the current queue, up to 15 songs shown."', tokens.prefix + 'play : "Play the music queue if already joined to a voice channel"', '', 'the following commands only function while the play command is running:'.toUpperCase(), tokens.prefix + 'pause : "pauses the music"',	tokens.prefix + 'resume : "resumes the music"', tokens.prefix + 'skip : "skips the playing song"', tokens.prefix + 'time : "Shows the playtime of the song."', '```'];
+		let tosend = ['```xl', tokens.prefix + 'add : "Add a valid youtube link to the queue"', tokens.prefix + 'queue : "Shows the current queue, up to 15 songs shown."', tokens.prefix + 'play : "Play the music queue if already joined to a voice channel"', '', 'The following commands only function while the play command is running:'.toUpperCase(), tokens.prefix + 'pause : "Pauses the music"',	tokens.prefix + 'resume : "Resumes the music"', tokens.prefix + 'skip : "Skips the playing song"', tokens.prefix + 'time : "Shows the playtime of the current song."', '```'];
 		msg.channel.send(tosend.join('\n'));
 	},
 	'reboot': (msg) => {
@@ -178,7 +174,7 @@ const commands = {
 
 client.on('ready', () => {
 	// join the designated voice channel
-	commands.join().then(connection => console.log('Connected to ' + tokens.voiceChannelName)).catch(console.error);
+	commands.join(tokens.voiceChannelName).then(connection => console.log('Connected to ' + tokens.voiceChannelName)).catch(console.error);
 });
 
 client.on('message', msg => {
