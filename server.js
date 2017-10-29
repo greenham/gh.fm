@@ -14,7 +14,7 @@ let queue = {};
 
 const commands = {
 	'play': (msg) => {
-		if (queue[msg.guild.id] === undefined) {
+		if (queue[msg.guild.id] === undefined || queue[msg.guild.id].length === 0) {
 			// no songs in the queue right now, pick randomly from some known livestreams
 			return msg.channel.send(`Queue is empty, add songs with ${tokens.prefix}add (playing from livestreams until then)`).then(() => {
 			  let livestream = fallbackStreams[Math.floor(Math.random()*fallbackStreams.length)];
@@ -170,8 +170,7 @@ const commands = {
 	},
 	'reboot': (msg) => {
 		if (msg.author.id == tokens.adminID) {
-			msg.channel.send('Restarting...');
-			process.exit(); //Requires a node module like Forever to work.
+			msg.channel.send('Restarting...').then(process.exit());
 		} else {
 			msg.channel.send('Only the admin is allowed to do that.');
 		}
