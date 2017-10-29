@@ -14,7 +14,7 @@ let queue = {};
 
 const commands = {
 	'play': (msg) => {
-		if (queue[msg.guild.id] === undefined || queue[msg.guild.id].length === 0) {
+		if (queue[msg.guild.id] === undefined || queue[msg.guild.id].songs.length === 0) {
 			// no songs in the queue right now, pick randomly from some known livestreams
 			return msg.channel.send(`Queue is empty, add songs with ${tokens.prefix}add (playing from livestreams until then)`).then(() => {
 			  let livestream = fallbackStreams[Math.floor(Math.random()*fallbackStreams.length)];
