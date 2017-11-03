@@ -48,7 +48,7 @@ const commands = {
 				queue[msg.guild.id].playing = false;
 				queue[msg.guild.id].livestreamMode = false;
 				msg.channel.send(`Queue is empty, add more songs with \`${tokens.prefix}add\`, or play a random livestream with \`${tokens.prefix}play\``);
-				
+
 				// disconnect from voice
 				msg.guild.voiceConnection.disconnect();
 			}
@@ -88,13 +88,22 @@ const commands = {
 					} else {
 						msg.channel.send('Only the requester or a DJ can do that right now.');
 					}
-				} else if (m.content.startsWith('volume+') && userIsDJ){
+				} else if (m.content.startsWith(tokens.prefix + 'volume+') && userIsDJ) {
 					if (Math.round(dispatcher.volume*50) >= 100) return msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 					dispatcher.setVolume(Math.min((dispatcher.volume*50 + (2*(m.content.split('+').length-1)))/50,2));
 					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
-				} else if (m.content.startsWith('volume-') && userIsDJ){
+				} else if (m.content.startsWith(tokens.prefix + 'volume-') && userIsDJ) {
 					if (Math.round(dispatcher.volume*50) <= 0) return msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 					dispatcher.setVolume(Math.max((dispatcher.volume*50 - (2*(m.content.split('-').length-1)))/50,0));
+					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
+				} else if (m.content.startsWith(tokens.prefix + 'vol-bg') && userIsDJ) {
+					dispatcher.setVolume(0.25);
+					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
+				} else if (m.content.startsWith(tokens.prefix + 'vol-default') && userIsDJ) {
+					dispatcher.setVolume(0.5);
+					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
+				} else if (m.content.startsWith(tokens.prefix + 'vol-loud') && userIsDJ) {
+					dispatcher.setVolume(1);
 					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 				} else if (m.content.startsWith(tokens.prefix + 'time')){
 					msg.channel.send(`Current song time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
