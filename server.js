@@ -47,7 +47,10 @@ const commands = {
 			if (song === undefined) {
 				queue[msg.guild.id].playing = false;
 				queue[msg.guild.id].livestreamMode = false;
-				return msg.channel.send(`Queue is empty, add more songs with \`${tokens.prefix}add\`, or play a random livestream with \`${tokens.prefix}play\``);
+				msg.channel.send(`Queue is empty, add more songs with \`${tokens.prefix}add\`, or play a random livestream with \`${tokens.prefix}play\``);
+				
+				// disconnect from voice
+				msg.guild.voiceConnection.disconnect();
 			}
 
 			// start playing
@@ -85,11 +88,11 @@ const commands = {
 					} else {
 						msg.channel.send('Only the requester or a DJ can do that right now.');
 					}
-				} else if (m.content.startsWith('volume+') && m.author.id == tokens.adminID){
+				} else if (m.content.startsWith('volume+') && userIsDJ){
 					if (Math.round(dispatcher.volume*50) >= 100) return msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 					dispatcher.setVolume(Math.min((dispatcher.volume*50 + (2*(m.content.split('+').length-1)))/50,2));
 					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
-				} else if (m.content.startsWith('volume-') && m.author.id == tokens.adminID){
+				} else if (m.content.startsWith('volume-') && userIsDJ){
 					if (Math.round(dispatcher.volume*50) <= 0) return msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 					dispatcher.setVolume(Math.max((dispatcher.volume*50 - (2*(m.content.split('-').length-1)))/50,0));
 					msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
