@@ -186,7 +186,7 @@ const commands = {
 
 				// check if seek time was requested
 				let seek = 0;
-				if (/t\=\d+/.test(url) !== -1) {
+				if (/t\=\d+/.test(url) === true) {
 					seek = url.match(/t\=(\d+)/)[1];
 				}
 
