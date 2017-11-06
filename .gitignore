@@ -51,4 +51,4 @@ node_modules/*
 logs/*
 
 start.bat
-tokens.json
+config.json

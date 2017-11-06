@@ -1,6 +1,17 @@
 # GH.FM
 A v11 Discord.JS music bot based on OhGodMusicBot.
 
+## TODOs
+- ability to save "favorites" and add them easily - maybe with a short text code or a numbered menu
+- use channels instead of specific streams and search/find streams on-the-fly
+
+## Feature Requests
+```feature request - playlists. where I can do like 
+!playlist create screevo
+!playlist screevo add g5MSf_ig_IA
+!playlist screevo add iK1VM4IQa_s
+and have that playlist stored and accessible multiple days.```
+
 ## Installation (Windows)
 
 This section is for running the bot locally on Windows. If you're on Mac it should be similar. I'll assume Linux users can figure it out.
