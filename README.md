@@ -4,6 +4,8 @@ A v11 Discord.JS music bot based on OhGodMusicBot.
 ## TODOs
 - ability to save "favorites" and add them easily - maybe with a short text code or a numbered menu
 - use channels instead of specific streams and search/find streams on-the-fly
+- support sources other than youtube
+- support yt playlist addition
 
 ## Feature Requests
 ```feature request - playlists. where I can do like 
