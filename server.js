@@ -13,7 +13,7 @@ const commands = {};
 client.on('ready', () => {
 	let textChannel = client.channels.find('name', config.textChannelName);
 	console.log(`[${new Date()}] ${config.botName} is ready.`);
-	textChannel.send(`${config.botName} is ready.`);// Connect to any voice channel and use \`${config.prefix}add\` to queue up some songs or \`${config.prefix}play\` to start playing from a livestream immediately.`);
+	textChannel.send(`${config.botName} is ready.`);
 });
 
 client.on('message', msg => {
