@@ -6,7 +6,7 @@ const Discord = require('discord.js');
 const Music = require('discord.js-musicbot-addon');
 const client = new Discord.Client();
 const config = require('./config.json');
-//const fallbackStreams = ["ezvTXN6vXRM", "2L9vFNMvIBE", "3KR2S3juSqU", "iUm_9ozEVlk", "NHo7fSJ9ItE"];
+const fallbackStreams = ["ezvTXN6vXRM", "2L9vFNMvIBE", "3KR2S3juSqU", "iUm_9ozEVlk", "NHo7fSJ9ItE"];
 
 const commands = {};
 
@@ -34,7 +34,8 @@ const music = new Music(client, {
   ownerOverMember: true,
   botOwner: config.adminID,
   youtubeKey: config.youtubeApiKey,
-  djRoleName: config.djRoleName
+  djRoleName: config.djRoleName,
+  livestreams: fallbackStreams
 });
 
 // catch Promise errors
