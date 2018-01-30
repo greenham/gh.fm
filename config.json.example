@@ -1,0 +1,21 @@
+{
+  "botName": "GH.FM",
+  "cmdPrefix": "!",
+  "livestreams": "",
+  "discord": {
+  	"token": "",
+  	"adminID": "",
+  	"prefix": "!",
+  	"textChannelName": "",
+  	"djRoleName": "",
+  	"enableStartupMessage": false
+  },
+  "youtube": {
+  	"apiKey": ""
+  },
+  "subsonic": {
+    "username": "",
+    "password": "",
+    "server": ""
+  }
+}

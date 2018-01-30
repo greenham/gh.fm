@@ -1,0 +1,21 @@
+{
+  "botName": "GH.FM",
+  "cmdPrefix": "!",
+  "livestreams": "",
+  "discord": {
+  	"token": "MzM0NzgzMTU3OTY0Mzc0MDE2.DEgOoA.CbhdnGxrZH494ccGqV07YwbeUSs",
+  	"adminID": "88301001169207296",
+  	"prefix": "!",
+  	"textChannelName": "ghfm",
+  	"djRoleName": "ghfm-dj",
+  	"enableStartupMessage": false
+  },
+  "youtube": {
+  	"apiKey": "AIzaSyC607oVk6_g9dJKvmcE2_cO4GoPnsa5UFM"
+  },
+  "subsonic": {
+    "username": "admin",
+    "password": "goodnewseveryone",
+    "server": "127.0.0.1"
+  }
+}

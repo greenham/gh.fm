@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "description": "A custom v11 Discord.JS music bot based on ohgodmusicbot",
   "main": "server.js",
+  "dependencies": {
+    "discord.js": "^11.2.1",
+    "discord.js-musicbot-addon": "github:greenham/discord.js-musicbot-addon#master",
+    "node-opus": "^0.2.7",
+    "subsonic": "git+https://github.com/greenham/subsonic.git"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
-  },
-  "dependencies": {
-    "bufferutil": "^3.0.2",
-    "discord.js": "11.0.0",
-    "erlpack": "^0.1.2",
-    "libsodium-wrappers": "^0.5.2",
-    "node-opus": "^0.2.6",
-    "uws": "^8.14.0",
-    "youtube-dl": "^1.11.1",
-    "ytdl-core": "github:fent/node-ytdl-core#master"
   },
   "author": "github.com/greenham",
   "license": "MIT"
