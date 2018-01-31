@@ -5,9 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "discord.js": "^11.2.1",
-    "discord.js-musicbot-addon": "github:greenham/discord.js-musicbot-addon#master",
-    "node-opus": "^0.2.7",
-    "subsonic": "git+https://github.com/greenham/subsonic.git"
+    "discord.js-musicbot-addon": "github:greenham/discord.js-musicbot-addon#develop",
+    "node-opus": "^0.2.7"
   },
   "devDependencies": {},
   "scripts": {

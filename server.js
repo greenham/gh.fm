@@ -14,18 +14,10 @@ client.on('ready', () => {
   if (config.discord.enableStartupMessage) {
 	 textChannel.send(`${config.botName} is ready.`);
   }
-});
-
-client.on('message', msg => {
-	if (msg.channel.name !== tokens.textChannelName || !msg.content.startsWith(tokens.prefix)) return;
-	if (commands.hasOwnProperty(msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0]))
-		commands[msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0]](msg);
-});
-
-client.login(config.discord.token);
+}).login(config.discord.token);
 
 const music = new Music(client, {
-  prefix: config.discord.cmdPrefix,
+  prefix: config.cmdPrefix,
   maxQueueSize: 200,
   clearInvoker: false,
   helpCmd: 'help',
